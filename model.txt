@@ -1,0 +1,13 @@
+class Comment(models.Model):
+	name = models.CharField(max_length=255, blank=True)
+	email = models.EmailField(max_length=255, blank=True)
+	website = models.TextField(max_length=255, blank=True)
+	comment = models.TextField(max_length=255, blank=True)
+	created_on = models.DateTimeField(auto_now_add=True, null=True)
+	blog=models.ForeignKey(Blog,on_delete=models.CASCADE,related_name="comment")
+
+
+	def __str__(self):
+		return self.comment
+
+Basically here I took all the info of the Blog model in blog using foreign key as we want in which blog we have to comment on.
