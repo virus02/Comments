@@ -1,0 +1,21 @@
+def post(request,id):
+	comments =Comment.objects.all().filter(blog=id)
+	blogs=Blog.objects.get(id=id)
+
+	if request.method == "POST":
+		obj=Comment.objects.create(
+			name=request.POST['name'],
+			email=request.POST['email'],
+			website=request.POST['website'],
+			comment=request.POST['comment'],
+			blog=blogs,
+			)
+		obj.save()
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+	form = CommentForm()
+	return render(request, 'post.html', {'form': form,'comments':comments,'blogs':blogs})
+
+Here, it's actually storing the comment for the specific blog and comments are being filtered to their respective blog from the first line.
+And here "blogs" variable is taking the the Blog model ID in the second line and assigning it to "blog" variable where comments are being stored.
+So basically how it works is that its taking specific Blog id and filtering it against the comments so comments are being displayed on the Blog
+where the user is writing.
